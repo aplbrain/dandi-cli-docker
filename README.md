@@ -2,6 +2,24 @@
 Containerized DANDI CLI wrapper for downloading or uploading a file with
 environment variable flags.
 
+## Pennsieve
+
+The repository root includes `app.yml`, which declares a Pennsieve application
+with an `action` picker:
+
+- `download` requires `dandi_url` and writes downloaded files to `OUTPUT_DIR`.
+- `upload` requires `dataset_id` and `dandi_api_key`, then organizes all files
+  staged in `INPUT_DIR` and uploads them to `dandi_instance`.
+
+`dandiset_url` is optional for uploads; when empty, the container derives the
+EMBER draft URL from `dataset_id`. The manifest leaves conditionally required
+values empty by default because Pennsieve parameters cannot be required only
+for one value of `action`.
+
+Treat `dandi_api_key` as a secret. If your Pennsieve deployment supports
+runtime secrets or environment injection, supply `DANDI_API_KEY` that way
+instead of entering a token in a saved workflow parameter.
+
 ## Build
 
 ```bash

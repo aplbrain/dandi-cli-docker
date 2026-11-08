@@ -1,0 +1,63 @@
+schemaVersion: 1.0.0
+
+application:
+  name: DANDI CLI Transfer
+  description: Download data from DANDI or organize and upload input data to an EMBER Dandiset.
+  version: 1.0.1
+  maintainers:
+    - name: APL Brain Observatory
+  tags:
+    - dandi
+    - data-transfer
+    - upload
+    - download
+
+runtime:
+  cpu: 1024
+  memory: 4096
+  computeTypes:
+    - standard
+  timeoutSeconds: 86400
+
+parameters:
+  - name: action
+    type: string
+    description: Select download to retrieve a DANDI resource, or upload to organize and upload the staged input files.
+    defaultValue: download
+    validValues:
+      - download
+      - upload
+  - name: dandi_url
+    type: string
+    description: DANDI URL or identifier to download. Required when action is download; leave empty for upload.
+    defaultValue: ""
+  - name: dataset_id
+    type: string
+    description: Destination Dandiset identifier. Required when action is upload; leave empty for download.
+    defaultValue: ""
+  - name: dandi_api_key
+    type: string
+    description: API token for the selected DANDI instance. Required when action is upload; leave empty for download.
+    defaultValue: ""
+  - name: dandiset_url
+    type: string
+    description: Optional draft Dandiset URL used for upload staging. When empty, it is derived from dataset_id and the EMBER DANDI endpoint.
+    defaultValue: ""
+  - name: dandi_instance
+    type: string
+    description: DANDI instance passed to dandi upload.
+    defaultValue: ember-dandi
+
+inputs:
+  - name: source_data
+    description: Files to organize and upload when action is upload. Not used for download.
+    required: False
+    mediaTypes:
+      - application/octet-stream
+
+outputs:
+  - name: downloaded_data
+    description: Data downloaded from DANDI when action is download. Not used for upload.
+    required: False
+    mediaTypes:
+      - application/octet-stream

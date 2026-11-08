@@ -1,12 +1,18 @@
 #!/usr/bin/env sh
 set -eu
 
-ACTION="${DANDI_ACTION:-}"
-OUTPUT_DIR="${OUTPUT_DIR:-/output}"
-INPUT_DIR="${INPUT_DIR:-/input}"
-UPLOAD_WORK_DIR="${UPLOAD_WORK_DIR:-/work}"
-DATASET_ID="${DATASET_ID:-${DANDISET_ID:-}}"
-DANDI_INSTANCE="${DANDI_INSTANCE:-ember-dandi}"
+# Accept the existing Docker environment variables as well as the parameter
+# names used in app.yml. Pennsieve runtime versions have used both uppercase
+# environment variables and PARAM_<NAME> for declared parameters.
+ACTION="${DANDI_ACTION:-${ACTION:-${PARAM_ACTION:-${action:-}}}}"
+OUTPUT_DIR="${OUTPUT_DIR:-${PARAM_OUTPUT_DIR:-${output_dir:-/output}}}"
+INPUT_DIR="${INPUT_DIR:-${PARAM_INPUT_DIR:-${input_dir:-/input}}}"
+UPLOAD_WORK_DIR="${UPLOAD_WORK_DIR:-${PARAM_UPLOAD_WORK_DIR:-${upload_work_dir:-/work}}}"
+DATASET_ID="${DATASET_ID:-${DANDISET_ID:-${PARAM_DATASET_ID:-${dataset_id:-}}}}"
+DANDI_INSTANCE="${DANDI_INSTANCE:-${PARAM_DANDI_INSTANCE:-${dandi_instance:-ember-dandi}}}"
+DANDI_URL="${DANDI_URL:-${PARAM_DANDI_URL:-${dandi_url:-}}}"
+DANDI_API_KEY="${DANDI_API_KEY:-${PARAM_DANDI_API_KEY:-${dandi_api_key:-}}}"
+DANDISET_URL="${DANDISET_URL:-${PARAM_DANDISET_URL:-${dandiset_url:-}}}"
 
 usage() {
     cat >&2 <<'EOF'
