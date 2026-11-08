@@ -3,7 +3,7 @@ schemaVersion: 1.0.0
 application:
   name: DANDI CLI Transfer
   description: Download data from DANDI or organize and upload input data to an EMBER Dandiset.
-  version: 1.0.3
+  version: 1.0.4
   maintainers:
     - name: APL Brain Observatory
   tags:
@@ -17,6 +17,7 @@ runtime:
   memory: 4096
   computeTypes:
     - standard
+    - gpu
   timeoutSeconds: 86400
 
 parameters:
