@@ -3,7 +3,7 @@ schemaVersion: 1.0.0
 application:
   name: DANDI CLI Transfer
   description: Download data from DANDI or organize and upload input data to an EMBER Dandiset.
-  version: 1.0.2
+  version: 1.0.3
   maintainers:
     - name: APL Brain Observatory
   tags:

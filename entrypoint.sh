@@ -46,6 +46,14 @@ api_key_env_name() {
     printf '%s_API_KEY\n' "$1" | tr '[:lower:]' '[:upper:]' | tr '-' '_'
 }
 
+# DANDI CLI reads credentials from an instance-specific environment variable
+# (for example, EMBER_DANDI_API_KEY). Make an optional token available for
+# authenticated downloads as well as uploads; only uploads require one.
+if [ -n "$DANDI_API_KEY" ]; then
+    instance_api_key_env="$(api_key_env_name "$DANDI_INSTANCE")"
+    export "$instance_api_key_env=$DANDI_API_KEY"
+fi
+
 case "$ACTION" in
     download)
         if [ -z "${DANDI_URL:-}" ]; then
@@ -65,9 +73,6 @@ case "$ACTION" in
         if [ ! -d "$INPUT_DIR" ]; then
             die "INPUT_DIR does not exist or is not a directory: $INPUT_DIR"
         fi
-
-        instance_api_key_env="$(api_key_env_name "$DANDI_INSTANCE")"
-        export "$instance_api_key_env=$DANDI_API_KEY"
 
         dandiset_url="${DANDISET_URL:-https://dandi.emberarchive.org/dandiset/$DATASET_ID/draft}"
         mkdir -p "$UPLOAD_WORK_DIR"
